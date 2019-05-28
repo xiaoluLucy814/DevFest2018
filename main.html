@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+        width : 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <div style="position: absolute;left: 1300px;top: 250px; z-index: 899">
+    <input type="checkbox" name="vehicle1" value="Bike" onclick="change(1)"> Spicy<br>
+    <input type="checkbox" name="vehicle1" value="Bike" onclick="change(2)"> Chinese<br>
+    <input type="checkbox" name="vehicle1" value="Bike" onclick="change(3)"> Ramen<br>
+    <input type="checkbox" name="vehicle1" value="Bike" onclick="change(4)"> Thai<br>
+    <input type="checkbox" name="vehicle1" value="Bike" onclick="change(5)"> Burger<br>
+    <input type="checkbox" name="vehicle1" value="Bike" onclick="change(6)"> Pancake<br>
+    <input type="checkbox" name="vehicle1" value="Bike" onclick="change(7)"> Desserts<br>
+    <input type="checkbox" name="vehicle1" value="Bike" onclick="change(8)"> Greek<br>
+    <input type="checkbox" name="vehicle1" value="Bike" onclick="change(9)"> Korean<br>
+    <input type="checkbox" name="vehicle1" value="Bike" onclick="change(10)"> Salad<br>
+
+
+
+   </div>
+
+   <div style="position: absolute;left: 1300px;top: 530px; z-index: 896">
+   <input type="checkbox" name="vehicle1" value="Bike" onclick="change(11)"> $<br>
+   <input type="checkbox" name="vehicle1" value="Bike" onclick="change(12)"> $$<br>
+
+
+  </div>
+
+  <div style="position: absolute;left: 1300px;top: 600px; z-index: 893">
+  <input type="checkbox" name="vehicle1" value="Bike" onclick="change(13)"> Less than 20mins<br>
+  <input type="checkbox" name="vehicle1" value="Bike" onclick="change(14)"> 20mins-40mins <br>
+  <input type="checkbox" name="vehicle1" value="Bike" onclick="change(15)"> More than 40mins<br>
+
+
+ </div>
+
+  <div style="position: absolute;left: 1300px;top: 200px; z-index: 895">
+  <input type="checkbox" name="vehicle1" value="Bike" onclick="change(0)"> Restaurants Open Now<br>
+  </div>
+
+  <img src="./pic/preference.jpg" style=" position: absolute;right: 0px;top: 50px; width="300"; height="750"">
+  <img src="./pic/submit.jpg" onclick="submitFunc()" style=" position: absolute;right: 110px;top: 720px; width="80"; height="50" ">
+
+
+
+
+
+
+
+
+
+
+    <script>
+    var choiceOut = [0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0,0, 0, 0, 0,];
+    function change(number){
+       if(choiceOut[number]==0){
+        choiceOut[number]=1;
+      }
+      else{
+        choiceOut[number]=0;
+      }
+    }
+
+
+     var data=[[67, 4, 2, true],[14, 3, 1, true],[41, 4, 1, true],[143, 3, 1, true],[20, 3.5, 1, true],
+              [154, 3, 2, true],[13, 3.5, 2, true],[276, 3, 2, true],[278, 3.5, 2, true],[105, 3, 1, true],
+              [31, 3.5, 1, true],[174, 3.5, 2, true],[138, 4, 2, true],[210, 4, 2, true],[200, 3.5, 2, true],
+              [307, 3, 2, true],[157, 3, 1, true],[288, 4, 2, true],[6, 4.5, 2, true],[846, 3.5, 2, true],]
+
+           var result=[6,0,0,0,0];
+
+           function submitFunc(){
+           var score=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+           for(var i=0; i<20; i++){
+             score[i]+=data[i][0]/20+data[i][1]*2;
+             score[19]-=20;
+
+             if(data[i][2]==2 && choiceOut[11]==1){score[i]-=6;}
+
+             if(data[i][2]==1 && choiceOut[12]==1){score[i]-=9;}
+
+             if(i==1 || i==0 || i==7){
+               if(choiceOut[5]==1){score[i]+=3;}if(choiceOut[7]==1){score[i]+=3;}
+               if(choiceOut[6]==1){score[i]+=3;}}
+
+             if(i==2){
+               if(choiceOut[10]==1){score[i]+=3;}if(choiceOut[7]==1){score[i]+=3;}}
+
+             if(i==3 || i==9 || i==16){
+               if(choiceOut[2]==1){score[i]+=3;}if(choiceOut[6]==1){score[i]+=3;}
+               if(choiceOut[9]==1){score[i]+=8;}if(choiceOut[7]==1){score[i]+=3;}
+               if(choiceOut[10]==1){score[i]+=3;}}
+
+             if(i==4){
+               if(choiceOut[1]==1){score[i]+=3;}if(choiceOut[10]==1){score[i]+=3;}
+               if(choiceOut[4]==1){score[i]+=3;}}
+
+             if(i==5){
+               if(choiceOut[10]==1){score[i]+=3;}}
+
+             if(i==6){
+               score[i]+=100;}
+
+             if(i==8){
+               if(choiceOut[5]==1){score[i]+=3;}if(choiceOut[6]==1){score[i]+=3;}
+               if(choiceOut[10]==1){score[i]+=3;}}
+
+             if(i==10){
+               if(choiceOut[5]==1){score[i]+=3;}
+               if(choiceOut[1]==1){score[i]+=3;}
+               if(choiceOut[10]==1){score[i]+=3;}}
+
+             if(i==11){
+               if(choiceOut[5]==1){score[i]+=3;}
+               if(choiceOut[8]==1){score[i]+=8;}}
+
+             if(i==12){
+               if(choiceOut[1]==1){score[i]+=3;}
+               if(choiceOut[2]==1){score[i]+=3;}}
+
+             if(i==14){
+               if(choiceOut[10]==1){score[i]+=3;}
+               if(choiceOut[7]==1){score[i]+=3;}}
+
+             if(i==15){
+               if(choiceOut[9]==1){score[i]+=8;}
+               if(choiceOut[1]==1){score[i]+=3;}}
+
+             if(i==17){if(choiceOut[5]==1){score[i]+=3;} }
+
+             if(i==18 || i==13){if(choiceOut[7]==1){score[i]+=3;}}
+
+             if(i==19){if(choiceOut[5]==1){score[i]+=3;}}
+
+
+            //close option
+             if(data[i][3]==false){
+               score[i]=0;
+             }
+           }
+
+
+
+           //return result
+           for(var k=1; k<5;k++){
+             var tempt=0;
+             for(var j=0; j<20; j++){
+               if(score[tempt]<score[j]){
+                 tempt=j;
+               }
+               if(j==19){
+                 result[k]=tempt;
+                 score[tempt]=0;
+
+                 if(tempt==0){
+                   alert("Shake Shack");
+                 }
+                 if(tempt==1){
+                   alert("Pret A Manger");
+                 }
+                 if(tempt==2){
+                   alert("Brownie's Cafe");
+                 }
+                 if(tempt==3){
+                   alert("Hamilton Deli");
+                 }
+                 if(tempt==4){
+                   alert("Hooda Halal Cart");
+                 }
+                 if(tempt==5){
+                   alert("sweetgreen");
+                 }
+                 if(tempt==6){
+                   alert("John Jay Dining Hall");
+                 }
+                 if(tempt==7){
+                   alert("Basics");
+                 }
+                 if(tempt==8){
+                   alert("Friedman's");
+                 }
+                 if(tempt==9){
+                   alert("Strokos Gourmet Deli");
+                 }
+                 if(tempt==10){
+                   alert("Uncle Luoyang");
+                 }
+                 if(tempt==11){
+                   alert("Symposium Greek Restaurant");
+                 }
+                 if(tempt==12){
+                   alert("Junzi Kitchen");
+                 }
+                 if(tempt==13){
+                   alert("Joe Coffee Company");
+                 }
+                 if(tempt==14){
+                   alert("Milano Market");
+                 }
+                 if(tempt==15){
+                   alert("Mill Korean");
+                 }
+                 if(tempt==16){
+                   alert("SubsConscious");
+                 }
+                 if(tempt==17){
+                   alert("Dig Inn");
+                 }
+                 if(tempt==18){
+                   alert("Coffee Cart on 120th and Bdwy");
+                 }
+                 if(tempt==19){
+                   alert("Community Food & Juice");
+                 }
+
+
+
+               }
+             }
+           }
+
+         }
+
+
+
+
+
+    function initMap() {
+      var Database;
+      var school = {lat: 40.8075, lng: -73.9626};
+      // The map is centered at school
+      var map = new google.maps.Map(
+          document.getElementById('map'), {zoom: 17.8, center: school});
+        //map.setMapTypeId('terrain');
+
+
+        //Here stores the position of restaurants
+        var shakeshack = {lat: 40.808095, lng: -73.964070};
+        var pret = {lat: 40.808314, lng: -73.964539};
+        var brownie = {lat: 40.808472, lng: -73.960939};
+        var hamilton = {lat: 40.806734, lng: -73.960655};
+        var hooda = {lat: 40.807048, lng: -73.954093};
+        var sweetgreen = {lat: 40.807309, lng: -73.964747};
+        var johnjay = {lat: 40.806135, lng: -73.962638};
+        var basics = {lat: 40.805625, lng: -73.962007};
+        var friedman = {lat: 40.808503, lng: -73.959755};
+        var stroko = {lat: 40.805449, lng: -73.962321};
+        var luoyang = {lat: 40.800560, lng: -73.966232};
+        var symposium = {lat: 40.805529, lng: -73.963631};
+        var junzi = {lat: 40.805974, lng: -73.964783};
+        var joe = {lat: 40.810220, lng: -73.961956};
+        var milano = {lat: 40.806017, lng: -73.965230};
+        var mill = {lat: 40.806055, lng: -73.965684};
+        var subsconscious = {lat: 40.809059, lng: -73.958845};
+        var diginn = {lat: 40.805668, lng: -73.965211};
+        var coffeecart = {lat: 40.807931, lng: -73.964995};
+        var community = {lat: 40.805932, lng: -73.965758};
+
+
+        // Point the markers of the restaurants
+        marker1 = new google.maps.Marker({position: shakeshack, map: map});
+        marker2 = new google.maps.Marker({position: pret, map: map});
+        var marker3 = new google.maps.Marker({position: brownie, map: map});
+        var marker4 = new google.maps.Marker({position: hamilton, map: map});
+        var marker5 = new google.maps.Marker({position: hooda, map: map});
+        var marker6 = new google.maps.Marker({position: sweetgreen, map: map});
+        var marker7 = new google.maps.Marker({position: johnjay, map: map});
+        var marker8 = new google.maps.Marker({position: basics, map: map});
+        var marker9 = new google.maps.Marker({position: friedman, map: map});
+        var marker10 = new google.maps.Marker({position: stroko, map: map});
+        var marker11 = new google.maps.Marker({position: luoyang, map: map});
+        var marker12 = new google.maps.Marker({position: symposium, map: map});
+        var marker13 = new google.maps.Marker({position: junzi, map: map});
+        var marker14 = new google.maps.Marker({position: joe, map: map});
+        var marker15 = new google.maps.Marker({position: milano, map: map});
+        var marker16 = new google.maps.Marker({position: mill, map: map});
+        var marker17 = new google.maps.Marker({position: subsconscious, map: map});
+        var marker18 = new google.maps.Marker({position: diginn, map: map});
+        var marker19 = new google.maps.Marker({position: coffeecart, map: map});
+        var marker20 = new google.maps.Marker({position: community, map: map});
+
+        var content1 = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h1 id="firstHeading" class="firstHeading">Shake Shack</h1>'+
+        '<div id="bodyContent">'+
+        '<p>Rate: 4.0</p >'+
+        '<p>Price: $$</p >'+
+        '<p>Category: hotdog</p >'+
+        '</div>'+
+        '</div>';
+        var content2 = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h1 id="firstHeading" class="firstHeading">Pret A Manger</h1>'+
+        '<div id="bodyContent">'+
+        '<p>Rate: 3.0</p >'+
+        '<p>Price: $</p >'+
+        '<p>Category: sandwiches</p >'+
+        '</div>'+
+        '</div>';
+         var content3 = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h1 id="firstHeading" class="firstHeading">Brownie Cafe</h1>'+
+        '<div id="bodyContent">'+
+        '<p>Rate: 4.0</p >'+
+        '<p>Price: $</p >'+
+        '<p>Category: cafes</p >'+
+        '</div>'+
+        '</div>';
+         var content4 = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h1 id="firstHeading" class="firstHeading">Hamilton Deli</h1>'+
+        '<div id="bodyContent">'+
+        '<p>Rate: 3.0</p >'+
+        '<p>Price: $</p >'+
+        '<p>Category: deli</p >'+
+        '</div>'+
+        '</div>';
+        var content5 = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h1 id="firstHeading" class="firstHeading">Hooda Halal Food</h1>'+
+        '<div id="bodyContent">'+
+        '<p>Rate: 3.5</p >'+
+        '<p>Price: $</p >'+
+        '<p>Category: foodtrucks</p >'+
+        '</div>'+
+        '</div>';
+        var content6 = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h1 id="firstHeading" class="firstHeading">Sweetgreen</h1>'+
+        '<div id="bodyContent">'+
+        '<p>Rate: 3.0</p >'+
+        '<p>Price: $$</p >'+
+        '<p>Category: salad</p >'+
+        '</div>'+
+        '</div>';
+         var content7 = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h1 id="firstHeading" class="firstHeading">John Jay Dining Hall</h1>'+
+        '<div id="bodyContent">'+
+        '<p>Rate: 3.5</p >'+
+        '<p>Price: $$</p >'+
+        '<p>Category: tradamerican</p >'+
+        '</div>'+
+        '</div>';
+         var content8 = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h1 id="firstHeading" class="firstHeading">Basics</h1>'+
+        '<div id="bodyContent">'+
+        '<p>Rate: 3.0</p >'+
+        '<p>Price: $$</p >'+
+        '<p>Category: creperies</p >'+
+        '</div>'+
+        '</div>';
+         var content9 = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h1 id="firstHeading" class="firstHeading">Friedman</h1>'+
+        '<div id="bodyContent">'+
+        '<p>Rate: 3.5</p >'+
+        '<p>Price: $$</p >'+
+        '<p>Category: tradamerican</p >'+
+        '</div>'+
+        '</div>';
+         var content10 = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h1 id="firstHeading" class="firstHeading">Strokos Gourmet Deli</h1>'+
+        '<div id="bodyContent">'+
+        '<p>Rate: 3.0</p >'+
+        '<p>Price: $</p >'+
+        '<p>Category: foodtrucks</p >'+
+        '</div>'+
+        '</div>';
+        var content11 = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h1 id="firstHeading" class="firstHeading">Uncle LuoYang</h1>'+
+        '<div id="bodyContent">'+
+        '<p>Rating: 3.5</p>'+
+        '<p>Price: $</p>'+
+        '<p>Categories: Foodtrucks</p>'+
+        '</div>'+
+        '</div>';
+        var content12 = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h1 id="firstHeading" class="firstHeading">Symposium Greek</h1>'+
+        '<div id="bodyContent">'+
+        '<p>Rating: 3.5</p>'+
+        '<p>Price: $$</p>'+
+        '<p>Categories: Greek</p>'+
+        '</div>'+
+        '</div>';
+        var content13 = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h1 id="firstHeading" class="firstHeading">Junzi Kitchin</h1>'+
+        '<div id="bodyContent">'+
+        '<p>Rating: 4.0 </p>'+
+        '<p>Price: $$ </p>'+
+        '<p>Categories: Chinese </p>'+
+        '</div>'+
+        '</div>';
+        var content14 = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h1 id="firstHeading" class="firstHeading"> Joe Coffee Company</h1>'+
+        '<div id="bodyContent">'+
+        '<p>Rating:4.0 </p>'+
+        '<p>Price: $$</p>'+
+        '<p>Categories: Coffee</p>'+
+        '</div>'+
+        '</div>';
+        var content15 = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h1 id="firstHeading" class="firstHeading"> Milano Market</h1>'+
+        '<div id="bodyContent">'+
+        '<p>Rating:3.5 </p>'+
+        '<p>Price: $$</p>'+
+        '<p>Categories: grocery </p>'+
+        '</div>'+
+        '</div>';
+        var content16 = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h1 id="firstHeading" class="firstHeading"> Mill Koream </h1>'+
+        '<div id="bodyContent">'+
+        '<p>Rating: 3.0 </p>'+
+        '<p>Price: $$</p>'+
+        '<p>Categories: Korean </p>'+
+        '</div>'+
+        '</div>';
+        var content17 = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h1 id="firstHeading" class="firstHeading"> SubsConscious</h1>'+
+        '<div id="bodyContent">'+
+        '<p>Rating:3.0 </p>'+
+        '<p>Price: $</p>'+
+        '<p>Categories: Delis</p>'+
+        '</div>'+
+        '</div>';
+        var content18 = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h1 id="firstHeading" class="firstHeading"> Dig Inn</h1>'+
+        '<div id="bodyContent">'+
+        '<p>Rating:4.0 </p>'+
+        '<p>Price: $$</p>'+
+        '<p>Categories: New American</p>'+
+        '</div>'+
+        '</div>';
+        var content19 = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h1 id="firstHeading" class="firstHeading"> Coffee Cart</h1>'+
+        '<div id="bodyContent">'+
+        '<p>Rating:4.0 </p>'+
+        '<p>Price: $</p>'+
+        '<p>Categories: Coffee</p>'+
+        '</div>'+
+        '</div>';
+        var content20 = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h1 id="firstHeading" class="firstHeading"> Community Food & Juice</h1>'+
+        '<div id="bodyContent">'+
+        '<p>Rating:3.5 </p>'+
+        '<p>Price: $$</p>'+
+        '<p>Categories: New American</p>'+
+        '</div>'+
+        '</div>';
+
+        infowindow1 = new google.maps.InfoWindow({
+        content: content1});
+        marker1.addListener('click', function() {
+        infowindow1.open(map, marker1);marker1.setAnimation(google.maps.Animation.BOUNCE);
+});
+
+
+        infowindow2 = new google.maps.InfoWindow({
+        content: content2});
+        marker2.addListener('click', function() {
+        infowindow2.open(map, marker2);marker2.setAnimation(google.maps.Animation.BOUNCE);});
+
+        var infowindow3 = new google.maps.InfoWindow({
+        content: content3});
+        marker3.addListener('click', function() {
+        infowindow3.open(map, marker3);marker3.setAnimation(google.maps.Animation.BOUNCE);});
+
+        var infowindow4 = new google.maps.InfoWindow({
+        content: content4});
+        marker4.addListener('click', function() {
+        infowindow4.open(map, marker4);marker4.setAnimation(google.maps.Animation.BOUNCE);});
+
+        var infowindow5 = new google.maps.InfoWindow({
+        content: content5});
+        marker5.addListener('click', function() {
+        infowindow5.open(map, marker5);marker5.setAnimation(google.maps.Animation.BOUNCE);});
+
+        var infowindow6 = new google.maps.InfoWindow({
+        content: content6});
+        marker6.addListener('click', function() {
+        infowindow6.open(map, marker6);marker6.setAnimation(google.maps.Animation.BOUNCE);});
+
+        var infowindow7 = new google.maps.InfoWindow({
+        content: content7});
+        marker7.addListener('click', function() {
+        infowindow7.open(map, marker7);marker7.setAnimation(google.maps.Animation.BOUNCE);});
+
+        var infowindow8 = new google.maps.InfoWindow({
+        content: content8});
+        marker8.addListener('click', function() {
+        infowindow8.open(map, marker8);marker8.setAnimation(google.maps.Animation.BOUNCE);});
+
+        var infowindow9 = new google.maps.InfoWindow({
+        content: content9});
+        marker9.addListener('click', function() {
+        infowindow9.open(map, marker9);marker9.setAnimation(google.maps.Animation.BOUNCE);});
+
+        var infowindow10 = new google.maps.InfoWindow({
+        content: content10});
+        marker10.addListener('click', function() {
+        infowindow10.open(map, marker10);marker10.setAnimation(google.maps.Animation.BOUNCE);});
+
+        var infowindow11 = new google.maps.InfoWindow({
+        content: content11});
+        marker11.addListener('click', function() {
+        infowindow11.open(map, marker11);marker11.setAnimation(google.maps.Animation.BOUNCE);});
+
+        var infowindow12 = new google.maps.InfoWindow({
+        content: content12});
+        marker12.addListener('click', function() {
+        infowindow12.open(map, marker12);marker12.setAnimation(google.maps.Animation.BOUNCE);});
+
+        var infowindow13 = new google.maps.InfoWindow({
+        content: content13});
+        marker13.addListener('click', function() {
+        infowindow13.open(map, marker13);marker13.setAnimation(google.maps.Animation.BOUNCE);});
+
+        var infowindow14 = new google.maps.InfoWindow({
+        content: content14});
+        marker14.addListener('click', function() {
+        infowindow14.open(map, marker14);marker14.setAnimation(google.maps.Animation.BOUNCE);});
+
+        var infowindow15 = new google.maps.InfoWindow({
+        content: content15});
+        marker15.addListener('click', function() {
+        infowindow15.open(map, marker15);marker15.setAnimation(google.maps.Animation.BOUNCE);});
+
+        var infowindow16 = new google.maps.InfoWindow({
+        content: content16});
+        marker16.addListener('click', function() {
+        infowindow16.open(map, marker16);marker16.setAnimation(google.maps.Animation.BOUNCE);});
+
+        var infowindow17 = new google.maps.InfoWindow({
+        content: content17});
+        marker17.addListener('click', function() {
+        infowindow17.open(map, marker17);marker17.setAnimation(google.maps.Animation.BOUNCE);});
+
+        var infowindow18 = new google.maps.InfoWindow({
+        content: content18});
+        marker18.addListener('click', function() {
+        infowindow18.open(map, marker18);marker18.setAnimation(google.maps.Animation.BOUNCE);});
+
+        var infowindow19 = new google.maps.InfoWindow({
+        content: content19});
+        marker19.addListener('click', function() {
+        infowindow19.open(map, marker19);marker19.setAnimation(google.maps.Animation.BOUNCE);});
+
+        var infowindow20 = new google.maps.InfoWindow({
+        content: content20});
+        marker20.addListener('click', function() {
+        infowindow20.open(map, marker20);marker20.setAnimation(google.maps.Animation.BOUNCE);});
+  }
+
+
+
+
+          //userinterface
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmeZDNnil0pi_BRZLwXunZyeQtxkDHSDU&callback=initMap">
+    </script>
+  </body>
+</html>
